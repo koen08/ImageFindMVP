@@ -2,11 +2,11 @@ package com.example.imagefindmvp.app.ui
 
 import com.example.imagefindmvp.domain.models.ImageDao
 
-class ImageListPresenter(private val imageService: ImageService) :
-    AbstractPresenter<ImageListContract.View>(),
+class ImageListPresenter(view: BaseView) :
+    AbstractPresenter<ImageListContract.View>(view as ImageListContract.View),
     ImageListContract.Presenter {
     override fun getImageListByName(name: String) {
-        imageService.attach(this)
+        val imageService = ImageListService(this)
         imageService.requestImageList(name)
     }
 
