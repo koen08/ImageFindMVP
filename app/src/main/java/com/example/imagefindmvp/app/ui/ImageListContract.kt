@@ -11,8 +11,4 @@ interface ImageListContract {
         fun getImageListByName(name: String)
         fun setImageListToRecycleView(imageList: List<ImageDao>)
     }
-
-    interface Service : BaseService<Presenter> {
-        fun requestImageList(name: String)
-    }
 }

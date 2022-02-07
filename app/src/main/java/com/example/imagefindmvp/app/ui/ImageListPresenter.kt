@@ -1,16 +1,20 @@
 package com.example.imagefindmvp.app.ui
 
 import com.example.imagefindmvp.domain.models.ImageDao
+import com.example.imagefindmvp.domain.usecase.GetImageByName
+import javax.inject.Inject
 
-class ImageListPresenter(view: BaseView) :
-    AbstractPresenter<ImageListContract.View>(view as ImageListContract.View),
+class ImageListPresenter @Inject constructor(
+    val getImageByName: GetImageByName
+) :
+    AbstractPresenter<ImageListContract.View>(),
     ImageListContract.Presenter {
     override fun getImageListByName(name: String) {
-        val imageService = ImageListService(this)
-        imageService.requestImageList(name)
+        val result = getImageByName.get(name)
+        setImageListToRecycleView(result)
     }
 
     override fun setImageListToRecycleView(imageList: List<ImageDao>) {
-        view.glideImageList(imageList)
+        view?.glideImageList(imageList)
     }
 }
