@@ -7,4 +7,9 @@ abstract class AbstractPresenter<V : BaseView> : BasePresenter<V> {
     override fun attach(view: V) {
         this.view = view
     }
+
+    override fun detach() {
+        this.view = null
+    }
+
 }

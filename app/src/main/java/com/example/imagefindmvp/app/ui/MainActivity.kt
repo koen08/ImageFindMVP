@@ -27,14 +27,16 @@ class MainActivity : AppCompatActivity(), ImageListContract.View {
         recyclerView?.layoutManager = LinearLayoutManager(this)
         presenter.attach(this)
         presenter.getImageListByName("android")
-
-
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun glideImageList(imageList: List<ImageDao>) {
-        val adapter = ImageListAdapter(imageList, this)
+        val adapter = ImageListAdapter(imageList)
         recyclerView?.adapter = adapter
-       // adapter.notifyDataSetChanged()
+    }
+
+    override fun onDestroy() {
+        presenter.onDestroy()
+        presenter.detach()
+        super.onDestroy()
     }
 }

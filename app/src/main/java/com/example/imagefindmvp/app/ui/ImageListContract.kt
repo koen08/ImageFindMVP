@@ -10,5 +10,6 @@ interface ImageListContract {
     interface Presenter : BasePresenter<View> {
         fun getImageListByName(name: String)
         fun setImageListToRecycleView(imageList: List<ImageDao>)
+        fun onDestroy()
     }
 }

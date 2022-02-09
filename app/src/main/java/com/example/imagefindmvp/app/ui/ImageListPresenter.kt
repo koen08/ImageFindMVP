@@ -6,17 +6,20 @@ import com.example.imagefindmvp.domain.models.ImageDao
 import com.example.imagefindmvp.domain.models.ImageList
 import com.example.imagefindmvp.domain.usecase.GetImageByName
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class ImageListPresenter @Inject constructor(
-    val getImageByName: GetImageByName
+    private val getImageByName: GetImageByName
 ) :
     AbstractPresenter<ImageListContract.View>(),
     ImageListContract.Presenter {
+    private var dispos : Disposable? = null
+
     override fun getImageListByName(name: String) {
         val result = getImageByName.get(name)
-        result.subscribeOn(Schedulers.io())
+        dispos = result.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 val imageList = networkDaoToImageDomain(it)
@@ -37,4 +40,10 @@ class ImageListPresenter @Inject constructor(
     override fun setImageListToRecycleView(imageList: List<ImageDao>) {
         view?.glideImageList(imageList)
     }
+
+    override fun onDestroy() {
+        dispos?.dispose()
+    }
+
+
 }
