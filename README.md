@@ -3,7 +3,7 @@
 
 Функционал:
  
-* загрузка изображений с сайта *https://pixabay.com/*, используя откротое [API](https://pixabay.com/api/docs/).  
+* загрузка изображений с сайта *https://pixabay.com/*, используя открытое [API](https://pixabay.com/api/docs/).  
 * отображение, загруженного списка изображений, в recyclerView
 
 ---
